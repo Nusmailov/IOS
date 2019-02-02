@@ -16,18 +16,28 @@ class PostsViewController: UIViewController, UITableViewDataSource, UITableViewD
     @IBOutlet weak var table: UITableView!
     private var informations = [Post]()
     private var informationsAlamo = [Post]()
-    
-    
+    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         activityIndicatorView = UIActivityIndicatorView(style: .gray)
         table.backgroundView = activityIndicatorView
         loadAlamofire()
-        
+        activityIndicator.stopAnimating()
     }
     
-    
+    func activityCycle(){
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        
+        // Position it at the center of the ViewController.
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
+        activityIndicator.startAnimating()
+        
+    }
     func loadAlamofire(){
         Alamofire.request("https://jsonplaceholder.typicode.com/posts").responseJSON { response in
 //            print("Request: \(String(describing: response.request))")   // original url request

@@ -17,13 +17,14 @@ class CommentsViewController: UIViewController,UITableViewDataSource, UITableVie
     private var informations = [Comment]()
     private var informationsAlamo = [Comment]()
     @IBOutlet weak var table: UITableView!
-    
-    
-    
+    let activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        activityCycle();
         loadAlamofire()
+        activityIndicator.stopAnimating()
     }
     
     func loadAlamofire(){
@@ -53,5 +54,16 @@ class CommentsViewController: UIViewController,UITableViewDataSource, UITableVie
         cell.textLabel?.text = informationsAlamo[indexPath.row].email
         return cell
     }
-    
+    func activityCycle(){
+        activityIndicator.hidesWhenStopped = true
+        view.addSubview(activityIndicator)
+        
+        // Position it at the center of the ViewController.
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
+        activityIndicator.startAnimating()
+        
+    }
 }
