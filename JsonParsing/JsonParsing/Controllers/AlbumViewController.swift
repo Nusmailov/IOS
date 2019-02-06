@@ -25,18 +25,18 @@ class AlbumsViewController: UIViewController, UITableViewDataSource, UITableView
         loadAlamofire()
         activityIndicator.stopAnimating()
     }
+    
     func activityCycle(){
         activityIndicator.hidesWhenStopped = true
         view.addSubview(activityIndicator)
-        
         // Position it at the center of the ViewController.
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)])
         activityIndicator.startAnimating()
-        
     }
+    
     func loadAlamofire(){
         Alamofire.request("https://jsonplaceholder.typicode.com/albums").responseJSON { response in
             if let data = response.data, let _ = String(data: data, encoding: .utf8) {
